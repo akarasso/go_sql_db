@@ -1,4 +1,5 @@
 package ft_database
+
 import (
     "strings"
     "errors"
