@@ -5,7 +5,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func read_first_result(rows *sql.Rows) (map[string]interface{}, error) {
+func Read_first_result(rows *sql.Rows) (map[string]interface{}, error) {
     cols, _ := rows.Columns()
     for rows.Next() {
         columns := make([]interface{}, len(cols))
@@ -31,7 +31,7 @@ func read_first_result(rows *sql.Rows) (map[string]interface{}, error) {
     return nil, nil
 }
 
-func read_result(rows *sql.Rows) ([]map[string]interface{}, error) {
+func Read_result(rows *sql.Rows) ([]map[string]interface{}, error) {
     var res []map[string]interface{}
     cols, _ := rows.Columns()
     for rows.Next() {

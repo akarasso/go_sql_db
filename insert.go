@@ -36,7 +36,7 @@ func (db DatabaseConn)Insert(table string, data map[string]interface{}) (sql.Res
     if err := addInsertValue(&req, data, &dataValue); err != nil {
         return nil, err
     }
-    stmt, err := db.conn.Prepare(req)
+    stmt, err := db.Conn.Prepare(req)
     if err != nil {
         return nil, err
     }

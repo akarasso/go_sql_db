@@ -15,7 +15,7 @@ func (db DatabaseConn) Delete(table string, data map[string]interface{}) (sql.Re
     if err := addFieldsClause(&req, data, &dataValue); err != nil {
         return nil, err
     }
-    stmt, err := db.conn.Prepare(req)
+    stmt, err := db.Conn.Prepare(req)
     if err != nil {
         return nil, err
     }

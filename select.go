@@ -43,7 +43,7 @@ func addFieldsClause(req *string, data map[string]interface{}, dataValue *[]inte
         case map[string]interface{}:
             var dataCond []string
             for key, val := range where.(map[string]interface{}) {
-                dataCond = append(dataCond, key + " = ?")
+                dataCond = append(dataCond, "`" + key + "` = ?")
                 (*dataValue) = append((*dataValue), val)
             }
             (*req) += " WHERE " +  strings.Join(dataCond, " AND ")
@@ -63,11 +63,11 @@ func (db DatabaseConn)SelectFirst(table string, data map[string]interface{}) (ma
     if err := addFieldsSelect(&req, data); err != nil {
         return nil, err
     }
-    req += " FROM " + table
+    req += " FROM `" + table + "`"
     if err := addFieldsClause(&req, data, &dataValue); err != nil {
         return nil, err
     }
-    stmt, err := db.conn.Prepare(req)
+    stmt, err := db.Conn.Prepare(req)
     if err != nil {
         return nil, err
     }
@@ -76,7 +76,7 @@ func (db DatabaseConn)SelectFirst(table string, data map[string]interface{}) (ma
     if err != nil {
         return nil, err
     }
-    return read_first_result(rows)
+    return Read_first_result(rows)
 }
 
 func (db DatabaseConn)Select(table string, data map[string]interface{}) ([]map[string]interface{}, error) {
@@ -87,11 +87,11 @@ func (db DatabaseConn)Select(table string, data map[string]interface{}) ([]map[s
     if err := addFieldsSelect(&req, data); err != nil {
         return nil, err
     }
-    req += " FROM " + table
+    req += " FROM `" + table + "`"
     if err := addFieldsClause(&req, data, &dataValue); err != nil {
         return nil, err
     }
-    stmt, err := db.conn.Prepare(req)
+    stmt, err := db.Conn.Prepare(req)
     if err != nil {
         return nil, err
     }
@@ -100,5 +100,5 @@ func (db DatabaseConn)Select(table string, data map[string]interface{}) ([]map[s
     if err != nil {
         return nil, err
     }
-    return read_result(rows)
+    return Read_result(rows)
 }

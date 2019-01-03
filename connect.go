@@ -6,17 +6,17 @@ import (
 )
 
 type DatabaseConn struct {
-	conn	*sql.DB
+	Conn	*sql.DB
 }
 
 func Connect(dsn string) (*DatabaseConn, error) {
 	var err error
 	db := new(DatabaseConn)
-    db.conn, err = sql.Open("mysql", dsn)
+    db.Conn, err = sql.Open("mysql", dsn)
 	if err != nil {
 		return nil, err
     }
-    if err = db.conn.Ping(); err != nil {
+    if err = db.Conn.Ping(); err != nil {
 		return nil, err
     }
 	return db, nil
